@@ -38,8 +38,8 @@ import { AdminComponent } from './admin/admin.component';
 })
 export class AppModule {
 
- static UserApi: String = 'https://3.15.228.101:7283';
- static GroupApi: String = 'https://3.15.228.101:7234';
- static ConfigApi: String = 'https://3.15.228.101:7006';
- static AdminApi: String = 'https://3.15.228.101:7264';
+ static UserApi: String = 'https://3.15.228.101:8080';
+ static GroupApi: String = 'https://3.15.228.101:8081';
+ static ConfigApi: String = 'https://3.15.228.101:8082';
+ static AdminApi: String = 'https://3.15.228.101:8083';
 }
