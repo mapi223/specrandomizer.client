@@ -38,8 +38,8 @@ import { AdminComponent } from './admin/admin.component';
 })
 export class AppModule {
 
- static UserApi: String = 'https://3.15.228.101:8084';
- static GroupApi: String = 'https://3.15.228.101:8083';
- static ConfigApi: String = 'https://3.15.228.101:8081';
- static AdminApi: String = 'https://3.15.228.101:8080';
+ static UserApi: String = 'https://specrandomizer.org';
+ static GroupApi: String = 'https://specrandomizer.org';
+ static ConfigApi: String = 'https://specrandomizer.org';
+ static AdminApi: String = 'https://specrandomizer.org';
 }
