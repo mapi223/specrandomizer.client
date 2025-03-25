@@ -62,7 +62,7 @@ export class PlayerListComponent implements OnInit {
 
   onSubmit() {
     this.updateUserID();
-    this.http.post<IConfiguration>(AppModule.ConfigApi+'/api/Configuration', this.Configuration, {
+    this.http.post<IConfiguration>(AppModule.ConfigApi+'/api/Configuration/', this.Configuration, {
       headers: { 'Content-Type': 'application/json' }
     }).subscribe((response) => {
       this.isLoading = true;
