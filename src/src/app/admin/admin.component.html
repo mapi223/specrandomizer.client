@@ -1,0 +1,61 @@
+
+<div *ngIf="findUsers">
+  <p>
+    Click on a user to enter into their Edit page
+  </p>
+  <div *ngFor="let user of users, let i = index">
+    <button type="button" (click)="enterEditForUser(user.uId, i)">
+      <span>
+        {{user.userName}}
+      </span>
+    </button>
+  </div>
+</div>
+
+<div *ngIf="!findUsers">
+  <p>
+    Click on a Configuration to Start editing it or click on edit user
+  </p>
+  <button type="button" (click)="editUser(usrId)">
+    Edit User
+  </button>
+  <div *ngFor="let config of configs; let i = index">
+    <button type="button" (click)="editConfig(i, usrId)">
+      <div *ngFor="let player of config.players" class="player-container">
+        <p>{{ player.PlayerName }}</p>
+        <div class="color-container">
+          <span *ngFor="let class of player.SpecList"
+                class="color-swatch"
+                [style.background-color]="class === 13 ? classes[class-1].color : classes[class].color">
+          </span>
+        </div>
+      </div>
+    </button>
+  </div>
+  <button type="button" (click)="backToUserList()">Go Back To User List</button>
+</div>
+
+<div *ngIf="isEditingAUser">
+  <form>
+    <label>
+      User Name
+      <input type="text" [(ngModel)]="users[usrIndex].userName" name="userName">
+    </label>
+    <button type="button" (click)="sendDetails(usrId, usrIndex)">Submit</button>
+  </form>
+</div>
+
+<div *ngIf="isEditingAConfig">
+    <div *ngFor="let player of configs[configIndex].players; let i = index">
+      <label>
+        Player Name
+        <input type="text" [(ngModel)]="configs[configIndex].players[i].playerName" name="PlayerName">
+      </label>
+      <div *ngFor="let class of classes">
+        <label >
+          <button type="button" name="clss.className" (click)="selectClasses(class.id, i)">{{class.className}}</button>
+        </label>
+      </div>
+    </div>
+    <button type="buttton" (click)="sendDetails(usrId, configIndex)">Submit</button>
+</div>

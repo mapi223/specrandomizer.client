@@ -1,0 +1,45 @@
+.flex-container {
+  display: flex;
+  flex-direction: column; /* Stack buttons vertically */
+  align-items: stretch; /* Make buttons stretch to fill the width */
+  gap: 10px; /* Space between buttons */
+  width: 100%; /* Ensure full width usage */
+}
+
+button {
+  display: flex;
+  flex-direction: row; /* Players inside the button stack horizontally */
+  flex-wrap: nowrap; /* Prevent wrapping */
+  align-items: center;
+  justify-content: space-between; /* Distribute content evenly */
+  width: 100%; /* Ensure buttons fill the container */
+  padding: 10px;
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+  cursor: pointer;
+}
+
+.player-container {
+  display: flex;
+  flex-direction: column; /* Stack player details vertically */
+  align-items: center;
+  flex-grow: 1; /* Allow each player container to take up equal space */
+  min-width: 20%; /* Ensure players don't get too small */
+}
+
+.color-container {
+  display: flex;
+  flex-direction: row; /* Ensure swatches align horizontally */
+  flex-wrap: wrap; /* Allow wrapping if needed */
+  gap: 5px; /* Space between swatches */
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1; /* Allow swatch container to expand */
+}
+
+.color-swatch {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 1px solid #ccc;
+}

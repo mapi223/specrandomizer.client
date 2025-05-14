@@ -1,0 +1,103 @@
+.hover-effect {
+  background-color: #505050;
+  color: white;
+}
+
+.classes {
+    margin: 0 0 2em 0;
+    list-style-type: none;
+    padding: 0;
+    width: 15em;
+  }
+  
+  .classes li {
+    display: flex;
+  }
+  
+  .classes button {
+    flex: 1;
+    cursor: pointer;
+    position: relative;
+    left: 0;
+    background-color: #EEE;
+    margin: .25em;
+    padding: 0;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    height: 1.8em;
+  }
+
+  .classes button:hover {
+    color: var(--custom-color, #2c3a41);
+    background-color:var(--custom-background-color,#505050);
+    left: .1em;
+  }
+  
+  .classes button:active {
+    background-color: #525252;
+    color: #fafafa;
+  }
+  
+  .classes button.selected {
+    background-color: var(--custom-background-color, black);
+    color: var(--custom-color, grey);
+  }
+  
+  .classes button.selected:hover {
+    background-color: #505050;
+    color: white;
+  }
+  
+  .classes button.selected:active {
+    background-color: var(--custom-background-color, black);
+    color: white;
+  }
+
+  .classes button.selected:active {
+    font-weight: bold;
+  }
+  
+  .classes .badge {
+    display: inline-block;
+    font-size: small;
+    color: white;
+    padding: 0.8em 0.7em 0 0.7em;
+    background-color: #405061;
+    line-height: 1em;
+    margin-right: .8em;
+    border-radius: 4px 0 0 4px;
+  }
+  
+  .classes .name {
+    align-self: center;
+  }
+
+  .flex-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .bubble-item{
+    border-radius: 50%;
+    display: flex;
+    text-align: center;
+    flex-grow: 1;
+  }
+
+.cycling {
+  border: 3px solid gold;
+  animation: pulse 0.5s ease-in-out infinite alternate;
+}
+
+@keyframes pulse {
+  from {
+    transform: scale(1);
+  }
+
+  to {
+    transform: scale(1.1);
+  }
+}

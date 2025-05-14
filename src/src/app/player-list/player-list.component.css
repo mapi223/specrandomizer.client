@@ -1,0 +1,24 @@
+.flex-container{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+}
+
+.flex-container > div {
+    flex: .25;
+}
+
+
+ button {
+    flex: 1;
+    cursor: pointer;
+    position: relative;
+    left: 0;
+    background-color: #EEE;
+    margin: .25em;
+    padding: 0;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    height: 1.8em;
+  }

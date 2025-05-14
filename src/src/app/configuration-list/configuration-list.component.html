@@ -1,0 +1,13 @@
+<div class="flex-container">
+  <button *ngFor="let config of configs" (click)="navigateWithGroup(config)">
+    <div *ngFor="let player of config.players" class="player-container">
+      <p>{{ player.PlayerName }}</p>
+      <div class="color-container">
+        <span *ngFor="let class of player.SpecList"
+              class="color-swatch"
+              [style.background-color]="class === 13 ? classes[class-1].color : classes[class].color">
+        </span>
+      </div>
+    </div>
+  </button>
+</div>
