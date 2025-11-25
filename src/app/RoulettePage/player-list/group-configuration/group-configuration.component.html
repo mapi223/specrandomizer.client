@@ -1,0 +1,7 @@
+<button type="button" (click)="rollTheBones()"><span>Roll The Bones</span></button>
+
+<div class="AllThePeople">
+  <div *ngFor="let player of players">
+    <p>{{player.playerName}} is a {{player.specName}}</p>
+  </div>
+</div>

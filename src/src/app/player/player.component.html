@@ -1,9 +1,0 @@
-
-<div [ngClass]="{'grey': player.id%2 === 0 }">
-  <h4>{{player.PlayerName}}</h4>
-  <input type="text" [(ngModel)]="player.PlayerName" name="PlayerNameInputField">
-  <app-class-list [passedSelected]="this.player.SpecList"
-                  (selectionOutput)="inputPlayerSelection($event)">
-                   [isLoading]="isLoading"
-  </app-class-list>
-</div>
