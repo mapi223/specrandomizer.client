@@ -18,3 +18,56 @@ export const CLASSLIST: IClassDetails[] = [
     {id: 11, className: "Warlock", color: '#8788EE', font_color: Font_b},
     {id: 12, className: "Warrior", color: '#C69B6D', font_color: Font_b},
 ]
+
+export const DKSpecs = {
+    list: ["Blood", "Frost", "Unholy"],
+    shortName: ["B", "F", "U"]
+};
+export const DHSpecs = {
+    list: ["Devour", "Havoc", "Vengeance"],
+    shortName: ["D", "H", "V"]
+};
+export const DruidSpecs = {
+    list: ["Balance", "Feral", "Guardian", "Restoration"],
+    shortName: ["B", "F", "G", "R"]
+};
+export const EvokerSpecs = {
+    list: ["Augmentation", "Devastation", "Preservation"],
+    shortName: ["A", "D", "P"]
+};
+export const HunterSpecs = {
+    list: ["Beast Mastery", "Marksmanship", "Survival"],
+    shortName: ["B", "M", "S"]
+};
+export const MageSpecs = {
+    list: ["Arcane", "Fire", "Frost"],
+    shortName: ["A", "Fi", "Fr"]
+};
+export const MonkSpecs = {
+    list: ["Brewmaster", "Mistweaver", "Windwalker"],
+    shortName: ["B", "M", "W"]
+};
+export const PaladinSpecs = {
+    list: ["Holy", "Protection", "Retribution"],
+    shortName: ["H", "P", "R"]
+};
+export const PriestSpecs = {
+    list: ["Discipline", "Holy", "Shadow"],
+    shortName: ["D", "H", "S"]
+};
+export const RogueSpecs = {
+    list: ["Assassination", "Outlaw", "Subtlety"],
+    shortName: ["A", "O", "S"]
+};
+export const ShamanSpecs = {
+    list: ["Elemental", "Enhancement", "Restoration"],
+    shortName: ["El", "En", "R"]
+};
+export const WarlockSpecs = {
+    list: ["Affliction", "Demonology", "Destruction"],
+    shortName: ["A", "Dem", "Des"]
+};
+export const WarriorSpecs = {
+    list: ["Arms", "Fury", "Protection"],
+    shortName: ["A", "F", "P"]
+};

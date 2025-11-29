@@ -1,46 +1,56 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { IClassDetails } from '../class-list/classDetails';
 import { IPlayer } from './player.model';
+import { filter, map, Observable, take } from 'rxjs';
+import { RouletteState } from '../player-list.component';
+import { Store } from '@ngrx/store';
+import { selectPlayerById } from 'src/app/Store/RouletteSelectors';
+import { IAppState } from 'src/app/Store/RouletteReducers';
+
+
+
 
 @Component({
   selector: 'app-player',
   templateUrl: './player.component.html',
   styleUrls: ['./player.component.css']
 })
-export class PlayerComponent {
+export class PlayerComponent implements OnInit {
 
   @Input() isLoading!: boolean;
   @Input() playerId!: number;
-  @Input() playerData!: IPlayer;
+  player$!: Observable<IPlayer>;
+  playerlist$: Observable<IPlayer[]> = this.store.select((state: IAppState) => state.roulette.PlayerList);
 
-  player: IPlayer = { id: 0, SpecList: [], PlayerName: "" };
+  constructor(private store: Store<IAppState>) {
+  }
 
-  @Output() sendPlayerDetails = new EventEmitter<IPlayer>();
-
-  ngOnChanges() {
-    if (this.playerData) {
-      this.player = {
-        ...this.playerData,
-        id: this.playerId
-      };
-    } else {
-      this.player = { id: this.playerId, SpecList: [], PlayerName: "Player " + this.playerId };
-    }
+  ngOnInit(){
+    this.player$ = this.store.select(selectPlayerById, { playerId: this.playerId }).pipe(
+      // Filter out undefined values
+      filter((player): player is IPlayer => player !== undefined)
+    );
+    console.log('Initialized player component for playerId:', this.playerId);
   }
 
   inputPlayerSelection(eventList: IClassDetails[]) {
     if (!eventList || eventList.length === 0) {
-      this.player.SpecList = [];
-    } else {
-      this.player.SpecList = eventList
-        .filter(event => event && event.id !== undefined) // Ensure objects exist
-        .map(event => event.id);
+      if (this.player$) {
+        this.player$.pipe(take(1)).subscribe(player => {
+          if (player) {
+            player.SpecList = [];
+          }
+        });
+      if (this.player$) {
+        this.player$.pipe(take(1)).subscribe(player => {
+          if (player) {
+            player.SpecList = eventList
+              .filter(spec => spec && spec.id !== undefined) // Ensure objects exist
+              .map(spec => spec.id);
+          }
+          });
+        }
+      }
     }
-
-    this.sendPlayerDetails.emit(this.player);
   }
 }
-
-
-
-

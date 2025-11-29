@@ -18,6 +18,14 @@ export interface ISpecialization {
   SpecName: string;
 }
 
+export interface IPlayerGroup{
+  playerId: number,
+  playerName: string,
+  specName: string,
+  ClassId: number,
+  Role: IRole
+}
+
 export enum IRole {
   Tank,
   Healer,

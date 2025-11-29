@@ -5,3 +5,5 @@ export interface IClassDetails {
     color: string;
     font_color: string;
 }
+
+

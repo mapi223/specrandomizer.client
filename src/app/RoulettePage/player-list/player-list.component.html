@@ -1,15 +1,16 @@
 <div class="player-list">
-  <button type="button" *ngIf="players < 5" (click)="addPlayer()"><span>Add Player</span></button>
-  <button type="button" *ngIf="players > 0" (click)="removePlayer()"><span>Remove Player</span></button>
+    <button type="button" *ngIf="((players$ | async) ?? 0) < 5" (click)="addPlayer()"><span>Add Player</span></button>
+    <button type="button" *ngIf="((players$ | async) ?? 0) > 0" (click)="removePlayer()"><span>Remove Player</span></button>
   <div class="flex-container">
-    <app-player *ngFor="let player of playersArray;let i = index"
+  <ng-container *ngIf="playerlist$ | async as playerlist">
+  <app-player *ngFor="let player of playerlist; let i = index"
                 [playerId]=i+1
-                [playerData]="playerList[i]"
-                [isLoading]="isLoading"
-                (sendPlayerDetails)="inputPlayerList($event)">
-    </app-player>
-
+                [isLoading]="isLoading">
+  </app-player>
+  </ng-container>
   </div>
   <app-group-configuration [players]=this.RoleAssignments>
   </app-group-configuration>
+
+
 </div>

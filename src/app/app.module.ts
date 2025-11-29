@@ -11,6 +11,10 @@ import { PlayerComponent } from './RoulettePage/player-list/player/player.compon
 import { SpecRouletteHeaderComponent } from './spec-roulette-header/spec-roulette-header.component';
 import { GroupConfigurationComponent } from './RoulettePage/player-list//group-configuration/group-configuration.component';
 
+import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { rouletteReducer } from './Store/RouletteReducers';
+
 
 
 @NgModule({
@@ -26,7 +30,12 @@ import { GroupConfigurationComponent } from './RoulettePage/player-list//group-c
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    StoreModule.forRoot({ roulette: rouletteReducer }),
+    StoreDevtoolsModule.instrument({
+      name: 'Spec Roulette',
+      maxAge: 25,
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]

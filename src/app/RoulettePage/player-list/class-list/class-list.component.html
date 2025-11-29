@@ -3,7 +3,7 @@
     <button type="button"
             [style.--custom-background-color]="classDetails.color"
             [style.--custom-color]="classDetails.font_color"
-            [class.selected]="isSelected(classDetails)"
+            [class.selected]="isSelected(classDetails) | async"
             [class.cycling]="i === currentIndex"
             (click)="onSelect(classDetails)">
       <span>{{ classDetails.className }}</span>

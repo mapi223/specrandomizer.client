@@ -1,9 +1,12 @@
 
-<div [ngClass]="{'grey': player.id%2 === 0 }">
+<div [ngClass]="{'grey': playerId%2 === 0 }">
+  <ng-container *ngIf="player$ | async as player">
   <h4>{{player.PlayerName}}</h4>
   <input type="text" [(ngModel)]="player.PlayerName" name="PlayerNameInputField">
-  <app-class-list [passedSelected]="this.player.SpecList"
+  <app-class-list [passedSelected]="player.SpecList"
+                  [PlayerId]="playerId"
                   (selectionOutput)="inputPlayerSelection($event)"
                    [isLoading]="isLoading">
   </app-class-list>
+  </ng-container>
 </div>
