@@ -7,7 +7,7 @@ export const assignRoles = createAction('[Roulette] Assign Roles');
 export const resetRoulette = createAction('[Roulette] Reset Roulette');
 export const updatePlayerName = createAction(
     '[Roulette] Update Player Name',
-    (playerId: number, newName: string) => ({ playerId, newName })
+    props<{ playerId: number, newName: string }>()
 );
 export const updatePlayerSpecs = createAction(
     '[Roulette] Update Player Specs',

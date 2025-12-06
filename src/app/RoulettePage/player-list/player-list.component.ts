@@ -42,7 +42,6 @@ export class PlayerListComponent {
   }
 
   ngOnInit(){
-    console.log('PlayerListComponent initialized, numPlayers observable:', this.players$.subscribe(num => console.log(num)));
   }
 
 

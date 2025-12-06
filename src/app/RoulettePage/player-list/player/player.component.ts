@@ -4,8 +4,9 @@ import { IPlayer } from './player.model';
 import { filter, map, Observable, take } from 'rxjs';
 import { RouletteState } from '../player-list.component';
 import { Store } from '@ngrx/store';
-import { selectPlayerById } from 'src/app/Store/RouletteSelectors';
+import { selectPlayerById, selectPlayerName } from 'src/app/Store/RouletteSelectors';
 import { IAppState } from 'src/app/Store/RouletteReducers';
+import { updatePlayerName } from 'src/app/Store/RouletteActions';
 
 
 
@@ -19,6 +20,8 @@ export class PlayerComponent implements OnInit {
 
   @Input() isLoading!: boolean;
   @Input() playerId!: number;
+  playername: string = "";
+  playerName$: Observable<string> = this.store.select(selectPlayerName, { playerId: this.playerId });
   player$!: Observable<IPlayer>;
   playerlist$: Observable<IPlayer[]> = this.store.select((state: IAppState) => state.roulette.PlayerList);
 
@@ -30,7 +33,15 @@ export class PlayerComponent implements OnInit {
       // Filter out undefined values
       filter((player): player is IPlayer => player !== undefined)
     );
+    this.playername = "Player " + this.playerId;
     console.log('Initialized player component for playerId:', this.playerId);
+  }
+
+  onPlayerNameChange(event: Event) {
+    const input = event.target as HTMLInputElement;
+    const newName = input.value;
+    this.playername = newName;
+    this.store.dispatch(updatePlayerName({ playerId: this.playerId, newName }));
   }
 
   inputPlayerSelection(eventList: IClassDetails[]) {

@@ -1,7 +1,7 @@
 <button type="button" (click)="rollTheBones()"><span>Roll The Bones</span></button>
 
-<div class="AllThePeople">
-  <div *ngFor="let player of players">
-    <p>{{player.playerName}} is a {{player.specName}}</p>
+<div class="AllThePeople" *ngIf="rolledBones">
+  <div *ngFor="let player of players$ | async">
+    <p>{{player.PlayerName}} is a {{chosenClasses[player.id]}}</p>
   </div>
 </div>

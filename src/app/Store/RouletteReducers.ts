@@ -1,7 +1,7 @@
 import { createAction, createReducer, on } from "@ngrx/store";
 import { IPlayer } from "../RoulettePage/player-list/player/player.model";
 import { IPlayerGroup } from "../RoulettePage/player-list/Configuration";
-import { addPlayer, removePlayer, updatePlayerSpecs } from "./RouletteActions";
+import { addPlayer, removePlayer, updatePlayerName, updatePlayerSpecs } from "./RouletteActions";
 
 export interface IAppState {
     roulette: RouletteState
@@ -37,6 +37,15 @@ export const rouletteReducer = createReducer(
         PlayerList: state.PlayerList.map(player =>  {
             if (player.id === playerId) {
                 return { ...player, SpecList: newSpecList };
+            }
+            return player;
+        })
+    })),
+    on((updatePlayerName), (state, { playerId, newName}) => ({
+        ...state,
+        PlayerList: state.PlayerList.map(player => {
+            if (player.id === playerId) {
+                return {...player, PlayerName: newName}
             }
             return player;
         })
