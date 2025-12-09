@@ -1,5 +1,12 @@
 export interface IPlayer {
   id: number;
-  SpecList: number[];
+  classList: IClass[];
   PlayerName: string;
 }
+
+
+export interface IClass {
+  id: number;
+  className: string;
+  activeSpecs: string[];
+};

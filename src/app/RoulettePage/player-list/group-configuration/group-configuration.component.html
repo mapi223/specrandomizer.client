@@ -2,6 +2,6 @@
 
 <div class="AllThePeople" *ngIf="rolledBones">
   <div *ngFor="let player of players$ | async">
-    <p>{{player.PlayerName}} is a {{chosenClasses[player.id]}}</p>
+    <p>{{player.PlayerName}} is a {{chosenClasses[player.id].ClassName}}</p>
   </div>
 </div>

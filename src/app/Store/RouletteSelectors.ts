@@ -1,18 +1,19 @@
 import { createSelector } from "@ngrx/store";
 import { IPlayer } from "../RoulettePage/player-list/player/player.model";
 import { IAppState, RouletteState } from "./RouletteReducers";
+import { state } from "@angular/animations";
 
 export const selectRouletteState = createSelector(
     (state: { roulette: RouletteState }) => state.roulette,
     (roulette: RouletteState) => roulette
 );
 
-export const selectPlayerById = createSelector(
-    (state: IAppState) => state.roulette.PlayerList,
-    (playerList: IPlayer[], props: { playerId: number }) => {
-        return playerList.find((player: IPlayer) => player.id === props.playerId);
+export const selectPlayerById = (state: IAppState, props: { playerId: number }) => {
+    if (props.playerId === undefined || props.playerId === null) {
+        return null;
     }
-);
+    return state.roulette.PlayerList.find((p: IPlayer) => p.id === props.playerId);
+};
 
 export const selectListOfPlayers = createSelector(
     (state: IAppState) => state.roulette.PlayerList,
@@ -29,11 +30,23 @@ export const selectPlayerGroups = createSelector(
     (groups) => groups
 );
 
+export const selectPlayerClasses = createSelector(
+    selectPlayerById,
+    (player) => {
+        if (player?.classList === undefined || player?.classList === null) {
+            return [];
+        }
+        else {
+            return player.classList;
+        }
+    }
+);
+
 export const selectPlayerSpecs = createSelector(
-    (state: IAppState) => state.roulette.PlayerList,
-    (playerList: IPlayer[], props: { playerId: number }) => {
-        const player = playerList.find((p: IPlayer) => p.id === props.playerId);
-        return player ? player.SpecList : [];
+    selectPlayerById,
+    (player) => {
+        const playerSpecs = player ? player.classList.flatMap(c => c.activeSpecs) : [];
+        return player ? playerSpecs : [];
     }
 );
 

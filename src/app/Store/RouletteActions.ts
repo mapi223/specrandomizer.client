@@ -1,5 +1,6 @@
 import { createAction, props } from "@ngrx/store";
 import { IClassDetails } from "../RoulettePage/player-list/class-list/classDetails";
+import { IClass } from "../RoulettePage/player-list/player/player.model";
 
 export const addPlayer = createAction('[Roulette] Add Player');
 export const removePlayer = createAction('[Roulette] Remove Player');
@@ -9,9 +10,13 @@ export const updatePlayerName = createAction(
     '[Roulette] Update Player Name',
     props<{ playerId: number, newName: string }>()
 );
+export const updatePlayerClasses = createAction(
+    '[Roulette] Update Player Classes',
+    props<{ playerId: number, newClassList: IClass[] }>()
+);
 export const updatePlayerSpecs = createAction(
     '[Roulette] Update Player Specs',
-    props<{ playerId: number, newSpecList: number[] }>()
+    props<{ playerId: number, newSpecList: string[], classId: number }>()
 );
 export const setLoadingState = createAction(
     '[Roulette] Set Loading State',

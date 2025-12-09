@@ -4,6 +4,9 @@ export interface IClassDetails {
     className: string;
     color: string;
     font_color: string;
+    specs: {
+        list: string[], shortName: string[]
+    };
 }
 
 

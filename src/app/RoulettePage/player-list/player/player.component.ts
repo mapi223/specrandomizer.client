@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { IClassDetails } from '../class-list/classDetails';
-import { IPlayer } from './player.model';
+import { IClass, IPlayer } from './player.model';
 import { filter, map, Observable, take } from 'rxjs';
 import { RouletteState } from '../player-list.component';
 import { Store } from '@ngrx/store';
@@ -28,7 +28,7 @@ export class PlayerComponent implements OnInit {
   constructor(private store: Store<IAppState>) {
   }
 
-  ngOnInit(){
+  ngOnInit() {
     this.player$ = this.store.select(selectPlayerById, { playerId: this.playerId }).pipe(
       // Filter out undefined values
       filter((player): player is IPlayer => player !== undefined)
@@ -49,16 +49,17 @@ export class PlayerComponent implements OnInit {
       if (this.player$) {
         this.player$.pipe(take(1)).subscribe(player => {
           if (player) {
-            player.SpecList = [];
+            player.classList = [];
           }
         });
-      if (this.player$) {
-        this.player$.pipe(take(1)).subscribe(player => {
-          if (player) {
-            player.SpecList = eventList
-              .filter(spec => spec && spec.id !== undefined) // Ensure objects exist
-              .map(spec => spec.id);
-          }
+        if (this.player$) {
+          this.player$.pipe(take(1)).subscribe(player => {
+            if (player) {
+              const classListFromEvent: IClass[] = eventList
+                .filter(ICDets => ICDets && ICDets.id !== undefined) // Ensure objects exist
+                .map(ICDets => ({ id: ICDets.id, className: ICDets.className, activeSpecs: ICDets.specs.shortName }));
+              player.classList = classListFromEvent;
+            }
           });
         }
       }
