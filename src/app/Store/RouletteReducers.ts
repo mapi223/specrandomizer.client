@@ -1,8 +1,8 @@
 import { createAction, createReducer, on } from "@ngrx/store";
 import { IClass, IPlayer } from "../RoulettePage/player-list/player/player.model";
-import { IPlayerGroup } from "../RoulettePage/player-list/Configuration";
+import { IPlayerGroup, IRole } from "../RoulettePage/player-list/Configuration";
 import { addPlayer, removePlayer, updatePlayerName, updatePlayerClasses, updatePlayerSpecs } from "./RouletteActions";
-import { CLASSLIST } from "../RoulettePage/player-list/class-list/mock-list";
+import { CLASSLIST, DamageSpecs, HealerSpecs, TankSpecs } from "../RoulettePage/player-list/class-list/mock-list";
 
 export interface IAppState {
     roulette: RouletteState
@@ -39,14 +39,37 @@ export const rouletteReducer = createReducer(
 
             let spec: string[] = [];
             let updatednewClassList: IClass[] = [];
+            let roleList: IRole[] = [];
             if (player.id === playerId) {
                 for (let i = 0; i < newClassList.length; i++) {
                     const tempSpecList = (CLASSLIST.filter(c => c.id === newClassList[i].id)[0].specs.shortName) || [];
                     spec.push(...tempSpecList);
+                    CLASSLIST.find(c=> newClassList[i].className === c.className)?.specs.list.forEach(s => {
+                        if(TankSpecs.list.includes(s)){
+                            if(!roleList.includes(IRole.Tank)){
+                                roleList.push(IRole.Tank);
+                            }
+                                //do nothing
+                        }
+                        else if(HealerSpecs.list.includes(s)){
+                            if(!roleList.includes(IRole.Healer)){
+                                roleList.push(IRole.Healer);
+                            }
+                        }
+                        else if(DamageSpecs.list.includes(s)){
+                            if(!roleList.includes(IRole.Damage)){
+                                roleList.push(IRole.Damage);
+                            }
+                        }
+                        else{
+                            roleList.push(IRole.INVALID);
+                            console.log("Spec not found in any role list: ", s);
+                        }
+                    });
                     updatednewClassList.push({ ...newClassList[i], activeSpecs: newClassList[i].activeSpecs.filter(s => tempSpecList.includes(s)) });
                 }
 
-                return { ...player, classList: newClassList };
+                return { ...player, classList: newClassList, roleList: roleList };
             }
             return player;
         })

@@ -4,33 +4,34 @@ const Font_b: string = '#020202'
 const Font: string = '#FFFFFF'
 
 export const TankSpecs = {
-    list: ["Blood DK", "Vengeance DH", "Guardian Druid", "Brewmaster Monk", "Protection Paladin", "Protection Warrior"],
+    list: ["Blood", "Vengeance", "Guardian", "Brewmaster", "Protection Paladin", "Protection Warrior"],
 
 };
 export const HealerSpecs = {
-    list: ["Restoration Druid", "Preservation Evoker", "Holy Paladin", "Discipline Priest", "Holy Priest", "Mistweaver Monk", "Restoration Shaman"],
+    list: ["Restoration Druid", "Preservation", "Holy Paladin", "Discipline", "Holy Priest", "Mistweaver", "Restoration Shaman"],
 };
 
 export const DamageSpecs = {
     list: [
-        "Frost DK", "Unholy DK",
-        "Devour DH", "Havoc DH",
-        "Balance Druid", "Feral Druid",
-        "Augmentation Evoker", "Devastation Evoker",
-        "Beast Mastery Hunter", "Marksmanship Hunter", "Survival Hunter",
-        "Arcane Mage", "Fire Mage", "Frost Mage",
-        "Windwalker Monk",
-        "Retribution Paladin",
-        "Assassination Rogue", "Outlaw Rogue", "Subtlety Rogue",
-        "Elemental Shaman", "Enhancement Shaman",
-        "Affliction Warlock", "Demonology Warlock", "Destruction Warlock",
-        "Arms Warrior", "Fury Warrior"
+        "Frost DK", "Unholy",
+        "Devour", "Havoc",
+        "Balance", "Feral",
+        "Augmentation", "Devastation",
+        "Beast Mastery", "Marksmanship", "Survival",
+        "Arcane", "Fire", "Frost Mage",
+        "Windwalker",
+        "Retribution",
+        "Shadow",
+        "Assassination", "Outlaw", "Subtlety",
+        "Elemental", "Enhancement",
+        "Affliction", "Demonology", "Destruction",
+        "Arms", "Fury"
     ]
 };
 
 
 export const DKSpecs = {
-    list: ["Blood", "Frost", "Unholy"],
+    list: ["Blood", "Frost DK", "Unholy"],
     shortName: ["B", "F", "U"]
 };
 export const DHSpecs = {
@@ -38,7 +39,7 @@ export const DHSpecs = {
     shortName: ["D", "H", "V"]
 };
 export const DruidSpecs = {
-    list: ["Balance", "Feral", "Guardian", "Restoration"],
+    list: ["Balance", "Feral", "Guardian", "Restoration Druid"],
     shortName: ["B", "F", "G", "R"]
 };
 export const EvokerSpecs = {
@@ -50,7 +51,7 @@ export const HunterSpecs = {
     shortName: ["B", "M", "S"]
 };
 export const MageSpecs = {
-    list: ["Arcane", "Fire", "Frost"],
+    list: ["Arcane", "Fire", "Frost Mage"],
     shortName: ["A", "Fi", "Fr"]
 };
 export const MonkSpecs = {
@@ -58,11 +59,11 @@ export const MonkSpecs = {
     shortName: ["B", "M", "W"]
 };
 export const PaladinSpecs = {
-    list: ["Holy", "Protection", "Retribution"],
+    list: ["Holy Paladin", "Protection Paladin", "Retribution"],
     shortName: ["H", "P", "R"]
 };
 export const PriestSpecs = {
-    list: ["Discipline", "Holy", "Shadow"],
+    list: ["Discipline", "Holy Priest", "Shadow"],
     shortName: ["D", "H", "S"]
 };
 export const RogueSpecs = {
@@ -70,7 +71,7 @@ export const RogueSpecs = {
     shortName: ["A", "O", "S"]
 };
 export const ShamanSpecs = {
-    list: ["Elemental", "Enhancement", "Restoration"],
+    list: ["Elemental", "Enhancement", "Restoration Shaman"],
     shortName: ["El", "En", "R"]
 };
 export const WarlockSpecs = {
@@ -78,7 +79,7 @@ export const WarlockSpecs = {
     shortName: ["A", "Dem", "Des"]
 };
 export const WarriorSpecs = {
-    list: ["Arms", "Fury", "Protection"],
+    list: ["Arms", "Fury", "Protection Warrior"],
     shortName: ["A", "F", "P"]
 };
 

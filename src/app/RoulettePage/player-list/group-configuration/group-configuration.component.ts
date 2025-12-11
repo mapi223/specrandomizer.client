@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { IClassDetails } from "../class-list/classDetails";
 import { IGPlayer } from './group.model';
-import { CLASSLIST } from '../class-list/mock-list';
+import { CLASSLIST, DamageSpecs, HealerSpecs, TankSpecs } from '../class-list/mock-list';
 import { props, Store } from '@ngrx/store';
 import { selectListOfPlayers, selectPlayerById } from 'src/app/Store/RouletteSelectors';
 import { IAppState } from 'src/app/Store/RouletteReducers';
@@ -27,12 +27,60 @@ export class GroupConfigurationComponent {
   healerPicked: boolean = false;
   allDamagePicked: number = 0;
   role: IRole = IRole.INVALID;
+  theParty: IPlayer[] = [];
 
-  getSpecName(specId: number, role: IRole): string {
-
-    return 'Unknown Spec';
+  isRoleAvailable(player: IPlayer, role: IRole): boolean {
+    return player.roleList?.includes(role) || false;
   }
 
+  getAvailableRoles(player: IPlayer): IRole[] {
+    return player.roleList || [];
+  }
+
+  getTankSpec(availableSpecs: string[]): string[] {
+    if (!availableSpecs || availableSpecs.length === 0) {
+      return ["IRole.INVALID"];
+    }
+
+    const tankSpecs = TankSpecs.list;
+    const matchingSpecs = availableSpecs.filter(spec => tankSpecs.includes(spec));
+    if (matchingSpecs.length > 0) {
+      const randomIndex = Math.floor(Math.random() * matchingSpecs.length);
+      const ClassName = CLASSLIST.find(classItem => classItem.specs.list.includes(matchingSpecs[randomIndex]))?.className || "Unknown Class";
+      return [ClassName, matchingSpecs[randomIndex]];
+    }
+    return ["IRole.INVALID"];
+  }
+
+  getHealerSpec(availableSpecs: string[]): string[] {
+    if (!availableSpecs || availableSpecs.length === 0) {
+      return ["IRole.INVALID"];
+    }
+    const healerSpecs = HealerSpecs.list;
+    const matchingSpecs = availableSpecs.filter(spec => healerSpecs.includes(spec));
+    if (matchingSpecs.length > 0) {
+      const randomIndex = Math.floor(Math.random() * matchingSpecs.length);
+      const ClassName = CLASSLIST.find(classItem => classItem.specs.list.includes(matchingSpecs[randomIndex]))?.className || "Unknown Class";
+      return [ClassName, matchingSpecs[randomIndex]];
+    }
+    return ["IRole.INVALID"];
+  }
+
+  getDamageSpec(availableSpecs: string[]): string[]{
+    if (!availableSpecs || availableSpecs.length === 0) {
+      return ["IRole.INVALID"];
+    }
+    const damageSpecs = DamageSpecs.list;
+    const matchingSpecs = availableSpecs.filter(spec => damageSpecs.includes(spec));
+    if (matchingSpecs.length > 0) {
+      const randomIndex = Math.floor(Math.random() * matchingSpecs.length);
+      const ClassName = CLASSLIST.find(classItem => classItem.specs.list.includes(matchingSpecs[randomIndex]))?.className || "Unknown Class";
+      return [ClassName, matchingSpecs[randomIndex]];
+    }
+    return ["IRole.INVALID"];
+  }
+
+  /*
   GetRole(player: IPlayer): IRole {
     // Implement your logic to get the role for the player
     this.store.select(selectListOfPlayers).pipe(take(1)).subscribe(players => {
@@ -132,7 +180,86 @@ export class GroupConfigurationComponent {
       }
     });
     return this.role;
+  }*/
+
+  assignRole(roleList: IRole[], 
+    isTankAvailable: boolean = true, isHealerAvailable: boolean = true, isDamageAvailable: boolean = true): IRole {
+    if (!roleList || roleList.length === 0) {
+      return IRole.INVALID;
+    }
+    if((isTankAvailable && roleList.includes(IRole.Tank)) || (isHealerAvailable && roleList.includes(IRole.Healer)) || (isDamageAvailable && roleList.includes(IRole.Damage))){
+      const randomIndex = Math.floor(Math.random() * roleList.length);
+      return roleList[randomIndex];
+    }
+    else if((!isTankAvailable && roleList.includes(IRole.Tank)) && (isHealerAvailable && roleList.includes(IRole.Healer)) && (isDamageAvailable && roleList.includes(IRole.Damage))){
+      const filteredRoles = roleList.filter(r => r !== IRole.Tank);
+      const randomIndex = Math.floor(Math.random() * filteredRoles.length);
+      return filteredRoles[randomIndex];
+    }
+    else if((isTankAvailable && roleList.includes(IRole.Tank)) && (!isHealerAvailable && roleList.includes(IRole.Healer)) && (isDamageAvailable && roleList.includes(IRole.Damage))){
+      const filteredRoles = roleList.filter(r => r !== IRole.Healer);
+      const randomIndex = Math.floor(Math.random() * filteredRoles.length);
+      return filteredRoles[randomIndex];
+    }
+    else if((isTankAvailable && roleList.includes(IRole.Tank)) && (isHealerAvailable && roleList.includes(IRole.Healer)) && (!isDamageAvailable && roleList.includes(IRole.Damage))){
+      const filteredRoles = roleList.filter(r => r !== IRole.Damage);
+      const randomIndex = Math.floor(Math.random() * filteredRoles.length);
+      return filteredRoles[randomIndex];
+    }
+    return IRole.INVALID;
   }
+
+  formGroupedParty(players: IPlayer[]): IGPlayer[] {
+    const groupedParty: IGPlayer[] = [];
+    let tankAssigned = false;
+    let healerAssigned = false;
+    let damageAssigned = 0;
+    let atMaxDamage = false;
+    let assignedClassAndSpec: string[] = [];
+    if(players && players.length === 5) {
+      players.forEach(player => {
+        const availableRoles = this.getAvailableRoles(player);
+        let assignedRole: IRole = IRole.INVALID;
+
+        if (availableRoles.length > 0) {
+          assignedRole = this.assignRole(availableRoles, !tankAssigned, !healerAssigned, !atMaxDamage);
+
+          if (assignedRole === IRole.Tank) {
+            tankAssigned = true;
+          } else if (assignedRole === IRole.Healer) {
+            healerAssigned = true;
+          } else if (assignedRole === IRole.Damage) {
+            damageAssigned += 1;
+            if (damageAssigned >= 3) {
+              atMaxDamage = true;
+            }
+          }
+        }
+        if (assignedRole !== IRole.INVALID) {
+          if (assignedRole === IRole.Tank) {
+            assignedClassAndSpec = this.getTankSpec(player.classList.flatMap(c => c.activeSpecs)) || ["Unknown Class", "Unknown Spec"];
+
+          } else if (assignedRole === IRole.Healer) {
+            assignedClassAndSpec = this.getHealerSpec(player.classList.flatMap(c => c.activeSpecs)) || ["Unknown Class", "Unknown Spec"];
+          } else if (assignedRole === IRole.Damage) {
+            assignedClassAndSpec = this.getDamageSpec(player.classList.flatMap(c => c.activeSpecs)) || ["Unknown Class", "Unknown Spec"];
+          }
+        } else {
+          assignedClassAndSpec = ["Class.INVALID", "IRole.INVALID"];
+        }
+        groupedParty.push({
+          Role: assignedRole,
+          SpecName: assignedClassAndSpec[1],
+          Player: player,
+          ClassName: assignedClassAndSpec[0]
+        });
+      });
+    }
+
+    return groupedParty;
+  }
+
+
 
   GetClass(player: IPlayer, role: IRole) {
     const availableClasses: IClassDetails[] = this.classList
@@ -148,7 +275,7 @@ export class GroupConfigurationComponent {
             ...this.chosenClasses[player.id],
             Player: p as IPlayer,
             ClassName: chosenClass.className,
-            SpecName: this.getSpecName(chosenClass.id, role),
+            SpecName: "Do this Later"
           }
         };
       });
@@ -165,13 +292,10 @@ export class GroupConfigurationComponent {
     this.players$.pipe(take(1)).subscribe(players => {
       if (players && players.length) {
         this.store.dispatch({ type: '[Roulette] Start Roulette' })
+        this.chosenClasses = this.formGroupedParty(players);
         this.rolledBones = true;
-        this.chosenClasses = [];
-        players.forEach(player => {
-
-          this.GetClass(player, this.GetRole(player));
-        });
-      } else {
+        }
+       else {
         console.log('No players available to roll the bones for.');
       }
     });
