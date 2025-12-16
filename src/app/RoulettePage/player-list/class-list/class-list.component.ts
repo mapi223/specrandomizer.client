@@ -52,7 +52,7 @@ export class ClassListComponent {
       if (list.find(clas => clas.id === classDetails.id)) {
         updatedClasses = list.filter(clas => clas.id !== classDetails.id)
       } else {
-        const udatedVal: IClass = { id: classDetails.id, className: classDetails.className, activeSpecs: classDetails.specs.shortName };
+        const udatedVal: IClass = { id: classDetails.id, className: classDetails.className, activeSpecs: classDetails.specs.list };
         updatedClasses = [...list, udatedVal];
       }
       console.log("Updated Classes:", updatedClasses, "for PlayerId:", this.PlayerId);
@@ -64,16 +64,15 @@ export class ClassListComponent {
   onSpecSelect(classDetail: IClassDetails, spec: string): void {
     this.classList$.pipe(take(1)).subscribe(clas => {
       const list = clas ? [...clas] : [];
-
-      const updatedClasses = list.filter(c => c.activeSpecs.includes(spec))
+      const specLongName: string = classDetail.specs.list[classDetail.specs.shortName.indexOf(spec)];
+      const updatedClasses = list.filter(c => c.activeSpecs.includes(specLongName))
       const specsForClass = list.find(c => c.id === classDetail.id)?.activeSpecs || [];
       let updatedSpecs: string[] = [];
-      if (specsForClass.includes(spec)) {
-        updatedSpecs = specsForClass.filter(s => s !== spec);
+      if (specsForClass.includes(specLongName)) {
+        updatedSpecs = specsForClass.filter(s => s !== specLongName);
       } else {
-        updatedSpecs = [...specsForClass, spec];
+        updatedSpecs = [...specsForClass, specLongName];
       }
-
 
 
       this.store.dispatch(updatePlayerSpecs({ playerId: this.PlayerId, newSpecList: updatedSpecs, classId: classDetail.id }));
@@ -106,8 +105,10 @@ export class ClassListComponent {
         if (specs === undefined) {
           return false;
         }
+        const specLongName: string = classDets.specs.list[classDets.specs.shortName.indexOf(spec)];
+
         specs.forEach(clas => {
-          if (clas.activeSpecs.includes(spec) && clas.id === classDets.id) {
+          if (clas.activeSpecs.includes(specLongName) && clas.id === classDets.id) {
             isSelect = true;
             console.log("Spec found:", clas);
             return isSelect;

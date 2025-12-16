@@ -42,26 +42,26 @@ export const rouletteReducer = createReducer(
             let roleList: IRole[] = [];
             if (player.id === playerId) {
                 for (let i = 0; i < newClassList.length; i++) {
-                    const tempSpecList = (CLASSLIST.filter(c => c.id === newClassList[i].id)[0].specs.shortName) || [];
+                    const tempSpecList = (CLASSLIST.filter(c => c.id === newClassList[i].id)[0].specs.list) || [];
                     spec.push(...tempSpecList);
-                    CLASSLIST.find(c=> newClassList[i].className === c.className)?.specs.list.forEach(s => {
-                        if(TankSpecs.list.includes(s)){
-                            if(!roleList.includes(IRole.Tank)){
+                    CLASSLIST.find(c => newClassList[i].className === c.className)?.specs.list.forEach(s => {
+                        if (TankSpecs.list.includes(s)) {
+                            if (!roleList.includes(IRole.Tank)) {
                                 roleList.push(IRole.Tank);
                             }
-                                //do nothing
+                            //do nothing
                         }
-                        else if(HealerSpecs.list.includes(s)){
-                            if(!roleList.includes(IRole.Healer)){
+                        else if (HealerSpecs.list.includes(s)) {
+                            if (!roleList.includes(IRole.Healer)) {
                                 roleList.push(IRole.Healer);
                             }
                         }
-                        else if(DamageSpecs.list.includes(s)){
-                            if(!roleList.includes(IRole.Damage)){
+                        else if (DamageSpecs.list.includes(s)) {
+                            if (!roleList.includes(IRole.Damage)) {
                                 roleList.push(IRole.Damage);
                             }
                         }
-                        else{
+                        else {
                             roleList.push(IRole.INVALID);
                             console.log("Spec not found in any role list: ", s);
                         }
@@ -80,7 +80,29 @@ export const rouletteReducer = createReducer(
             if (player.id === playerId) {
                 const classListIndex = player.classList.findIndex(c => c.id === classId);
                 if (classListIndex !== -1) {
-                    return { ...player, classList: player.classList.map((c, index) => index === classListIndex ? { ...c, activeSpecs: newSpecList } : c) };
+                    let newRoleList: IRole[] = []
+                    for (const spec of newSpecList) {
+                        if (TankSpecs.list.includes(spec)) {
+                            if (!newRoleList.includes(IRole.Tank)) {
+                                newRoleList.push(IRole.Tank);
+                            }
+                        }
+                        else if (HealerSpecs.list.includes(spec)) {
+                            if (!newRoleList.includes(IRole.Healer)) {
+                                newRoleList.push(IRole.Healer);
+                            }
+                        }
+                        else if (DamageSpecs.list.includes(spec)) {
+                            if (!newRoleList.includes(IRole.Damage)) {
+                                newRoleList.push(IRole.Damage);
+                            }
+                        }
+                        else {
+                            newRoleList.push(IRole.INVALID);
+                            console.log("Spec not found in any role list: ", spec);
+                        }
+                    }
+                    return { ...player, classList: player.classList.map((c, index) => index === classListIndex ? { ...c, activeSpecs: newSpecList } : c), roleList: newRoleList };
                 }
             }
             return player;
