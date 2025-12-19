@@ -47,7 +47,7 @@ export class GroupConfigurationComponent {
     if (matchingSpecs.length > 0) {
       const randomIndex = Math.floor(Math.random() * matchingSpecs.length);
       const ClassName = CLASSLIST.find(classItem => classItem.specs.list.includes(matchingSpecs[randomIndex]))?.className || "Unknown Class";
-      return [ClassName, matchingSpecs[randomIndex]];
+      return [ClassName, matchingSpecs[randomIndex].split(' ')[0]];
     }
     return ["IRole.INVALID"];
   }
@@ -62,7 +62,7 @@ export class GroupConfigurationComponent {
     if (matchingSpecs.length > 0) {
       const randomIndex = Math.floor(Math.random() * matchingSpecs.length);
       const ClassName = CLASSLIST.find(classItem => classItem.specs.list.includes(matchingSpecs[randomIndex]))?.className || "Unknown Class";
-      return [ClassName, matchingSpecs[randomIndex]];
+      return [ClassName, matchingSpecs[randomIndex].split(' ')[0]];
     }
     return ["IRole.INVALID"];
   }
@@ -77,38 +77,35 @@ export class GroupConfigurationComponent {
     if (matchingSpecs.length > 0) {
       const randomIndex = Math.floor(Math.random() * matchingSpecs.length);
       const ClassName = CLASSLIST.find(classItem => classItem.specs.list.includes(matchingSpecs[randomIndex]))?.className || "Unknown Class";
-      return [ClassName, matchingSpecs[randomIndex]];
+      return [ClassName, matchingSpecs[randomIndex].split(' ')[0]];
     }
     return ["IRole.INVALID"];
   }
 
 
   assignRole(roleList: IRole[],
-    isTankAvailable: boolean = true, isHealerAvailable: boolean = true, isDamageAvailable: boolean = true): IRole {
+    isTankAvailable: boolean , isHealerAvailable: boolean, isDamageAvailable: boolean): IRole {
     if (!roleList || roleList.length === 0) {
       return IRole.INVALID;
     }
-    if ((isTankAvailable && roleList.includes(IRole.Tank)) || (isHealerAvailable && roleList.includes(IRole.Healer)) || (isDamageAvailable && roleList.includes(IRole.Damage))) {
-      const randomIndex = Math.floor(Math.random() * roleList.length);
-      return roleList[randomIndex];
+      const filteredRoles: IRole[] = [];
+      if (isTankAvailable) {
+        filteredRoles.push(...roleList.filter(r => r === IRole.Tank));
+      }
+      if (isHealerAvailable) {
+        filteredRoles.push(...roleList.filter(r => r === IRole.Healer));
+      }
+      if (isDamageAvailable) {
+        filteredRoles.push(...roleList.filter(r => r === IRole.Damage));
+      }
+      if (filteredRoles.length > 0) {
+        const randomIndex = Math.floor(Math.random() * filteredRoles.length);
+        return filteredRoles[randomIndex];
+      }
+      else
+        return IRole.INVALID;
     }
-    else if ((!isTankAvailable && roleList.includes(IRole.Tank)) && (isHealerAvailable && roleList.includes(IRole.Healer)) && (isDamageAvailable && roleList.includes(IRole.Damage))) {
-      const filteredRoles = roleList.filter(r => r !== IRole.Tank);
-      const randomIndex = Math.floor(Math.random() * filteredRoles.length);
-      return filteredRoles[randomIndex];
-    }
-    else if ((isTankAvailable && roleList.includes(IRole.Tank)) && (!isHealerAvailable && roleList.includes(IRole.Healer)) && (isDamageAvailable && roleList.includes(IRole.Damage))) {
-      const filteredRoles = roleList.filter(r => r !== IRole.Healer);
-      const randomIndex = Math.floor(Math.random() * filteredRoles.length);
-      return filteredRoles[randomIndex];
-    }
-    else if ((isTankAvailable && roleList.includes(IRole.Tank)) && (isHealerAvailable && roleList.includes(IRole.Healer)) && (!isDamageAvailable && roleList.includes(IRole.Damage))) {
-      const filteredRoles = roleList.filter(r => r !== IRole.Damage);
-      const randomIndex = Math.floor(Math.random() * filteredRoles.length);
-      return filteredRoles[randomIndex];
-    }
-    return IRole.INVALID;
-  }
+    
 
   formGroupedParty(players: IPlayer[]): IGPlayer[] {
     const groupedParty: IGPlayer[] = [];
