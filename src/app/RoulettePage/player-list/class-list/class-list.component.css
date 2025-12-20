@@ -58,7 +58,6 @@
   font-weight: bold;
 }
 
-.specs-button {}
 
 .specs-container button.selected:hover {
   color: var(--custom-color, grey);
