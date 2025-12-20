@@ -1,0 +1,17 @@
+<div class="classes flex-container">
+  <div *ngFor="let classDetails of classes; let i = index" class="bubble-item">
+    <button type="button" [style.--custom-background-color]="classDetails.color"
+      [style.--custom-color]="classDetails.font_color" [class.selected]="isClassSelected(classDetails) | async"
+      [class.cycling]="i === currentIndex" (click)="onSelect(classDetails)">
+      <span>{{ classDetails.className }}</span>
+      <div *ngIf="selectedClasses.includes(classDetails)" class="specs-container">
+        <div *ngFor="let spec of classDetails.specs.shortName" class="spec-button">
+          <button [class.selected]="isSpecSelected(spec, classDetails) | async"
+            (click)="onSpecSelect(classDetails, spec); $event.stopPropagation()">
+            <span>{{ spec }}</span>
+          </button>
+        </div>
+      </div>
+    </button>
+  </div>
+</div>
