@@ -1,11 +1,12 @@
 import { createAction, createReducer, on } from "@ngrx/store";
 import { IClass, IPlayer } from "../RoulettePage/player-list/player/player.model";
 import { IPlayerGroup, IRole } from "../RoulettePage/player-list/Configuration";
-import { addPlayer, removePlayer, updatePlayerName, updatePlayerClasses, updatePlayerSpecs } from "./RouletteActions";
+import { addPlayer, removePlayer, updatePlayerName, updatePlayerClasses, updatePlayerSpecs, setPlayerList, saveCurrentConfigurations } from "./RouletteActions";
 import { CLASSLIST, DamageSpecs, HealerSpecs, TankSpecs } from "../RoulettePage/player-list/class-list/mock-list";
 
 export interface IAppState {
-    roulette: RouletteState
+    roulette: RouletteState,
+    consentState: IRouletteFeatureState
 };
 
 export interface RouletteState {
@@ -13,6 +14,10 @@ export interface RouletteState {
     PlayerList: IPlayer[],
     Group: IPlayerGroup[]
 };
+
+export interface IRouletteFeatureState {
+    consent: boolean
+}
 
 const initialState: RouletteState = {
     numPlayers: 0,
@@ -117,4 +122,16 @@ export const rouletteReducer = createReducer(
             }
             return player;
         })
-    })));
+    })),
+    on(setPlayerList, (state, { players }) => ({
+  ...state,
+  PlayerList: players,
+  numPlayers: players.length
+})),
+    on(saveCurrentConfigurations, (state) => ({
+        ...state,
+        consentState: {
+            consent: true
+        }
+    }))
+);

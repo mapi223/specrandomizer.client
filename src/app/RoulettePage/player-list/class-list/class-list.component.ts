@@ -55,7 +55,7 @@ export class ClassListComponent {
         const udatedVal: IClass = { id: classDetails.id, className: classDetails.className, activeSpecs: classDetails.specs.list };
         updatedClasses = [...list, udatedVal];
       }
-      console.log("Updated Classes:", updatedClasses, "for PlayerId:", this.PlayerId);
+      //console.log("Updated Classes:", updatedClasses, "for PlayerId:", this.PlayerId);
       this.store.dispatch(updatePlayerClasses({ playerId: this.PlayerId, newClassList: updatedClasses }));
       this.selectedClasses = this.classes.filter(c => updatedClasses.findIndex(uc => uc.id === c.id) !== -1);
     });
@@ -110,7 +110,7 @@ export class ClassListComponent {
         specs.forEach(clas => {
           if (clas.activeSpecs.includes(specLongName) && clas.id === classDets.id) {
             isSelect = true;
-            console.log("Spec found:", clas);
+            //console.log("Spec found:", clas);
             return isSelect;
           }
           else {

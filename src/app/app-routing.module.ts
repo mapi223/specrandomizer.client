@@ -5,7 +5,7 @@ import { newUserPage } from './NewUSer/newUser.component';
 
 const routes: Routes = [
   { path: 'roulette', component: PlayerListComponent, title: "SpecRoulette - Roulette Page"},
-  { path: 'newUserPage', component: newUserPage, title: "SpecRoulette - New User Page"},
+  { path: 'newUser', component: newUserPage, title: "SpecRoulette - New User Page"},
   { path: '', redirectTo: "/roulette", pathMatch: 'full' }
 ];
 

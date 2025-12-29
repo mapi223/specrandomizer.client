@@ -1,6 +1,6 @@
 import { createAction, props } from "@ngrx/store";
 import { IClassDetails } from "../RoulettePage/player-list/class-list/classDetails";
-import { IClass } from "../RoulettePage/player-list/player/player.model";
+import { IClass, IPlayer } from "../RoulettePage/player-list/player/player.model";
 
 export const addPlayer = createAction('[Roulette] Add Player');
 export const removePlayer = createAction('[Roulette] Remove Player');
@@ -44,4 +44,12 @@ export const saveCurrentConfigurations = createAction('[Roulette] Save Current C
 export const getShortNameForSelectedSpecs = createAction(
     '[Roulette] Get Short Name For Selected Specs',
     (playerId: number) => ({ playerId })
+);
+export const setCookieConsent = createAction(
+    '[Roulette] Set Cookie Consent',
+    (consent: boolean) => ({ consent })
+);
+export const setPlayerList = createAction(
+  '[Roulette] Set Player List',
+  props<{ players: IPlayer[] }>()
 );

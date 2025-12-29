@@ -8,6 +8,7 @@ import { IAppState } from 'src/app/Store/RouletteReducers';
 import { filter, take } from 'rxjs';
 import { IPlayer } from '../player/player.model';
 import { IRole } from '../Configuration';
+import { saveCurrentConfigurations } from 'src/app/Store/RouletteActions';
 
 
 @Component({
@@ -186,12 +187,12 @@ export class GroupConfigurationComponent {
 
   rollTheBones() {
     this.rolledBones = false;
-    console.log('Rolling the bones...');
     this.players$.pipe(take(1)).subscribe(players => {
       if (players && players.length) {
         this.store.dispatch({ type: '[Roulette] Start Roulette' })
         this.chosenClasses = this.formGroupedParty(players);
         this.rolledBones = true;
+        this.store.dispatch({ type: '[Roulette] Save Current Configurations' });
       }
       else {
         console.log('No players available to roll the bones for.');

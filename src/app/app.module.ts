@@ -14,6 +14,8 @@ import { GroupConfigurationComponent } from './RoulettePage/player-list//group-c
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { rouletteReducer } from './Store/RouletteReducers';
+import { EffectsModule } from '@ngrx/effects';
+import { RouletteEffects } from './Store/RouletteEffects';
 
 
 
@@ -32,6 +34,7 @@ import { rouletteReducer } from './Store/RouletteReducers';
     AppRoutingModule,
     FormsModule,
     StoreModule.forRoot({ roulette: rouletteReducer }),
+    EffectsModule.forRoot([RouletteEffects]),
     StoreDevtoolsModule.instrument({
       name: 'Spec Roulette',
       maxAge: 25,
