@@ -48,5 +48,6 @@ menu {
 }
 
   .dropdown-menu.open {
-    display: block;
+    display: flex;
+    flex-direction: column;
   }

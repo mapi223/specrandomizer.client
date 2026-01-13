@@ -16,6 +16,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { rouletteReducer } from './Store/RouletteReducers';
 import { EffectsModule } from '@ngrx/effects';
 import { RouletteEffects } from './Store/RouletteEffects';
+import { SavedGroupComponent } from './saved-group/saved-group.component';
 
 
 
@@ -26,7 +27,8 @@ import { RouletteEffects } from './Store/RouletteEffects';
     PlayerListComponent,
     PlayerComponent,
     SpecRouletteHeaderComponent,
-    GroupConfigurationComponent
+    GroupConfigurationComponent,
+    SavedGroupComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,22 @@
+<div *ngIf="groups$ | async as groups">
+  <h2>Saved Groups</h2>
+  <div *ngIf="groups.length > 0; else noGroups">
+    <ul>
+      <li *ngFor="let group of groups; let i = index">
+        <h3>Group Id: {{ i + 1 }}</h3>
+        <ul>
+          <li *ngFor="let player of group.players">
+            {{ player.PlayerName }}
+            <ol>
+              <li *ngFor="let class of player.classList">
+                - {{ class.ClassName }}: {{ class.activeSpecs }}
+              </li>
+            </ol>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+  <ng-template #noGroups>
+    <p>No saved groups found.</p>
+  </ng-template>

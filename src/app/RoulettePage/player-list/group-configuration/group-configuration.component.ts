@@ -3,7 +3,7 @@ import { IClassDetails } from "../class-list/classDetails";
 import { IGPlayer } from './group.model';
 import { CLASSLIST, DamageSpecs, HealerSpecs, TankSpecs } from '../class-list/mock-list';
 import { props, Store } from '@ngrx/store';
-import { selectListOfPlayers, selectPlayerById } from 'src/app/Store/RouletteSelectors';
+import { selectCookieConsent, selectListOfPlayers, selectPlayerById } from 'src/app/Store/RouletteSelectors';
 import { IAppState } from 'src/app/Store/RouletteReducers';
 import { filter, take } from 'rxjs';
 import { IPlayer } from '../player/player.model';
@@ -192,7 +192,11 @@ export class GroupConfigurationComponent {
         this.store.dispatch({ type: '[Roulette] Start Roulette' })
         this.chosenClasses = this.formGroupedParty(players);
         this.rolledBones = true;
-        this.store.dispatch({ type: '[Roulette] Save Current Configurations' });
+        this.store.select(selectCookieConsent).pipe(take(1)).subscribe(cookieConsent => {
+          if (cookieConsent) {
+            this.store.dispatch({ type: '[Roulette] Save Current Configurations' });
+          }
+        });
       }
       else {
         console.log('No players available to roll the bones for.');

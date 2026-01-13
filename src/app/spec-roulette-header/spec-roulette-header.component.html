@@ -2,12 +2,16 @@
   <div class="left">
       <a class="anchor-style" routerLink="/roulette">Spec Roulette</a>
       <a class="anchor-style" routerLink="/newUser"> New User Page</a>
+      <a *ngIf="CookieConsent" class="anchor-style" routerLink="/savedGroups">Saved Groups</a>
     </div>
   <button (click)="toggleMenu()" class="menu">☰</button>
 
 
   <div class="dropdown-menu" [class.open]="isMenuOpen">
-    <input type="checkbox" [(ngModel)]="CookieConsent" (change)="onCookieConsentChange()"> <span>Cookie Enabled</span>
+    <div>
+      <input type="checkbox" [(ngModel)]="CookieConsent" (change)="onCookieConsentChange()" text="Cookie Enabled"> Cookie Enabled
+    </div>
+    <button (click)="onClearCacheButton()">Clear Cache</button>
   </div>
 
   </div>

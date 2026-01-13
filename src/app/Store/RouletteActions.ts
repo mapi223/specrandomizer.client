@@ -40,6 +40,7 @@ export const startRoulette = createAction('[Roulette] Start Roulette');
 export const completeRoulette = createAction('[Roulette] Complete Roulette');
 export const resetPlayerConfigurations = createAction('[Roulette] Reset Player Configurations');
 export const loadPreviousConfigurations = createAction('[Roulette] Load Previous Configurations');
+export const loadConfigurationHistory = createAction('[Roulette] Load Configuration History');
 export const saveCurrentConfigurations = createAction('[Roulette] Save Current Configurations');
 export const getShortNameForSelectedSpecs = createAction(
     '[Roulette] Get Short Name For Selected Specs',
@@ -49,7 +50,33 @@ export const setCookieConsent = createAction(
     '[Roulette] Set Cookie Consent',
     (consent: boolean) => ({ consent })
 );
+
+export const setCookieConsentFromLoad = createAction(
+    '[Roulette] Set Cookie Consent From Load',
+    (consent: boolean) => ({ consent })
+);
+
 export const setPlayerList = createAction(
   '[Roulette] Set Player List',
   props<{ players: IPlayer[] }>()
 );
+
+export const setConfigurationHistory = createAction(
+  '[Roulette] Set Configuration History',
+  props<{ history: IPlayer[][] }>()
+);
+
+export const clearConfigurationHistory = createAction(
+  '[Roulette] Clear Configuration History'
+);
+
+export const saveCookieConsent = createAction(
+    '[Roulette] Save Cookie Consent',
+    (consent: boolean) => ({ consent })
+);
+
+export const loadCookieConsent = createAction(
+    '[Roulette] Load Cookie Consent'
+);
+
+

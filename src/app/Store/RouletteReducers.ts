@@ -1,28 +1,34 @@
 import { createAction, createReducer, on } from "@ngrx/store";
 import { IClass, IPlayer } from "../RoulettePage/player-list/player/player.model";
 import { IPlayerGroup, IRole } from "../RoulettePage/player-list/Configuration";
-import { addPlayer, removePlayer, updatePlayerName, updatePlayerClasses, updatePlayerSpecs, setPlayerList, saveCurrentConfigurations } from "./RouletteActions";
+import { addPlayer, removePlayer, updatePlayerName, updatePlayerClasses, updatePlayerSpecs, setPlayerList, saveCurrentConfigurations, setCookieConsent, loadConfigurationHistory, setConfigurationHistory, setCookieConsentFromLoad } from "./RouletteActions";
 import { CLASSLIST, DamageSpecs, HealerSpecs, TankSpecs } from "../RoulettePage/player-list/class-list/mock-list";
 
 export interface IAppState {
     roulette: RouletteState,
-    consentState: IRouletteFeatureState
+    consentState: IRouletteFeatureState,
 };
 
 export interface RouletteState {
+    consentState: any;
     numPlayers: number,
     PlayerList: IPlayer[],
     Group: IPlayerGroup[]
 };
 
 export interface IRouletteFeatureState {
-    consent: boolean
+    consent: boolean,
+    history: IPlayer[][]
 }
 
 const initialState: RouletteState = {
     numPlayers: 0,
     PlayerList: [],
-    Group: []
+    Group: [],
+    consentState: {
+        consent: false,
+        history: []
+    }
 };
 
 
@@ -128,10 +134,25 @@ export const rouletteReducer = createReducer(
   PlayerList: players,
   numPlayers: players.length
 })),
-    on(saveCurrentConfigurations, (state) => ({
-        ...state,
-        consentState: {
-            consent: true
-        }
-    }))
+on(setCookieConsent, (state, { consent }) => ({
+    ...state,
+    consentState: {
+        ...state.consentState,
+        consent: consent
+    }
+})),
+on(setCookieConsentFromLoad, (state, { consent }) => ({
+    ...state,
+    consentState: {
+        ...state.consentState,
+        consent: consent
+    }
+})),
+on(setConfigurationHistory, (state, { history }) => ({
+    ...state,
+    consentState: {
+        ...state.consentState,
+        history: history
+    }
+}))
 );

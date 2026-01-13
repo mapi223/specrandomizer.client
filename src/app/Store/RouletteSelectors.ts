@@ -63,5 +63,15 @@ export const selectAllPlayerNames = createSelector(
 export const selectCompleteState = createSelector(
     (state: IAppState) => state.roulette,
     (roulette) => roulette
-);
+)
+
+export const selectCookieConsent = createSelector(
+    (state: IAppState) => state.roulette.consentState,
+    (consentState) => consentState.consent
+)
+
+export const selectSavedGroups = createSelector(
+    (state: IAppState) => state.roulette.consentState,
+    (consentState) => consentState.history
+)
 
