@@ -42,7 +42,7 @@ export class RouletteStorageService {
     const history = this.loadHistoryRaw();
     const next = this.toStored(players);
     const alreadySaved = history.some(item => JSON.stringify(item) === JSON.stringify(next));
-    const updated = [next, ...history].slice(0, MAX_ITEMS);
+    const updated = alreadySaved ? history : [next, ...history].slice(0, MAX_ITEMS);
     const json = JSON.stringify(updated);
     // const json = compressToUTF16(JSON.stringify(updated)); // if using lz-string
     localStorage.setItem(KEY, json);
