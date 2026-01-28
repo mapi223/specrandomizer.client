@@ -1,0 +1,8 @@
+<button type="button" (click)="rollTheBones()"><span>Roll The Bones</span></button>
+
+<div class="AllThePeople" *ngIf="rolledBones">
+  <div *ngFor="let player of players$ | async">
+    <p>{{player.PlayerName}} has role: {{ IRoleEnum[chosenClasses[player.id -1].Role] }} is a {{chosenClasses[player.id -1].SpecName
+      + ' '+ chosenClasses[player.id-1].ClassName }}</p>
+  </div>
+</div>
