@@ -79,4 +79,12 @@ export const loadCookieConsent = createAction(
     '[Roulette] Load Cookie Consent'
 );
 
+export const loadRouletteFromHistory = createAction(
+    '[Roulette] Load Roulette From History',
+    props<{ groupId: number }>()
+);
 
+export const setRouletteFromHistory = createAction(
+    '[Roulette] Set Roulette From History',
+    props<{ players: IPlayer[] }>()
+);

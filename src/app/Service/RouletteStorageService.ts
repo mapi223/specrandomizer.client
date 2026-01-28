@@ -83,4 +83,8 @@ export class RouletteStorageService {
       return [];
     }
   }
+
+  loadSpecificHistory(groupId: number): IPlayer[] {
+    return this.loadHistory()[groupId] ?? [];
+  }
 }

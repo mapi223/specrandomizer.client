@@ -1,7 +1,7 @@
 import { createAction, createReducer, on } from "@ngrx/store";
 import { IClass, IPlayer } from "../RoulettePage/player-list/player/player.model";
 import { IPlayerGroup, IRole } from "../RoulettePage/player-list/Configuration";
-import { addPlayer, removePlayer, updatePlayerName, updatePlayerClasses, updatePlayerSpecs, setPlayerList, saveCurrentConfigurations, setCookieConsent, loadConfigurationHistory, setConfigurationHistory, setCookieConsentFromLoad } from "./RouletteActions";
+import { addPlayer, removePlayer, updatePlayerName, updatePlayerClasses, updatePlayerSpecs, setPlayerList, saveCurrentConfigurations, setCookieConsent, loadConfigurationHistory, setConfigurationHistory, setCookieConsentFromLoad, setRouletteFromHistory } from "./RouletteActions";
 import { CLASSLIST, DamageSpecs, HealerSpecs, TankSpecs } from "../RoulettePage/player-list/class-list/mock-list";
 
 export interface IAppState {
@@ -154,5 +154,11 @@ on(setConfigurationHistory, (state, { history }) => ({
         ...state.consentState,
         history: history
     }
+})),
+on(setRouletteFromHistory, (state, { players }) => ({
+    ...state,
+    PlayerList: players,
+    numPlayers: players.length,
+    Group: []
 }))
 );

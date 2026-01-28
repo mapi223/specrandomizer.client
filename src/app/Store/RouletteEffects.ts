@@ -85,4 +85,14 @@ initHistory$ = createEffect(() =>
       map(consent => RouletteActions.setCookieConsentFromLoad(consent))
     )
   );
+
+  loadRouletteFromHistory$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(RouletteActions.loadRouletteFromHistory),
+      map(action => action.groupId),
+      tap(groupId => console.log("RouletteEffects: Loading Roulette from saved history, redirect to follow")),
+      map(groupId => this.storage.loadSpecificHistory(groupId)),
+      map(players => RouletteActions.setRouletteFromHistory({ players }))
+    )
+  );
 }

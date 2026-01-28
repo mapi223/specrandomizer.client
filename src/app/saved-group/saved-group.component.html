@@ -3,15 +3,15 @@
   <div *ngIf="groups.length > 0; else noGroups">
     <ul>
       <li *ngFor="let group of groups; let i = index">
-        <h3>Group Id: {{ i + 1 }}</h3>
+        <input type ="button" (click)="loadGroup(i)" value="Load Group {{ i + 1 }}" />
         <ul>
-          <li *ngFor="let player of group.players">
+          <li *ngFor="let player of group">
             {{ player.PlayerName }}
-            <ol>
+            <ul>
               <li *ngFor="let class of player.classList">
-                - {{ class.ClassName }}: {{ class.activeSpecs }}
+                - {{ class.className }}: {{ class.activeSpecs }}
               </li>
-            </ol>
+            </ul>
           </li>
         </ul>
       </li>
