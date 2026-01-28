@@ -17,6 +17,7 @@ import { saveCurrentConfigurations } from 'src/app/Store/RouletteActions';
   styleUrls: ['./group-configuration.component.css']
 })
 export class GroupConfigurationComponent {
+[x: string]: any;
 
   constructor(private store: Store<IAppState>) { }
 
@@ -29,6 +30,7 @@ export class GroupConfigurationComponent {
   allDamagePicked: number = 0;
   role: IRole = IRole.INVALID;
   theParty: IPlayer[] = [];
+  IRoleEnum = IRole;
 
   isRoleAvailable(player: IPlayer, role: IRole): boolean {
     return player.roleList?.includes(role) || false;

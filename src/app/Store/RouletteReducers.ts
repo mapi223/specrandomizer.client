@@ -157,7 +157,24 @@ on(setConfigurationHistory, (state, { history }) => ({
 })),
 on(setRouletteFromHistory, (state, { players }) => ({
     ...state,
-    PlayerList: players,
+    PlayerList: players.map(p => {
+         // Build role list from active specs across all classes
+        const activeSpecs = (p.classList ?? []).flatMap(c => c.activeSpecs ?? []);
+        const roleList: IRole[] = [];
+        for (const spec of activeSpecs) {
+            if (TankSpecs.list.includes(spec)) {
+                if (!roleList.includes(IRole.Tank)) roleList.push(IRole.Tank);
+            } else if (HealerSpecs.list.includes(spec)) {
+                if (!roleList.includes(IRole.Healer)) roleList.push(IRole.Healer);
+            } else if (DamageSpecs.list.includes(spec)) {
+                if (!roleList.includes(IRole.Damage)) roleList.push(IRole.Damage);
+            } else {
+                // optional: include INVALID only if there are unknown specs
+                if (!roleList.includes(IRole.INVALID)) roleList.push(IRole.INVALID);
+            }
+        }
+        return { ...p, roleList };
+    }),
     numPlayers: players.length,
     Group: []
 }))
